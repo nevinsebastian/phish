@@ -1,18 +1,34 @@
-# backend.py
-from fastapi import FastAPI
-from pydantic import BaseModel
+from fastapi import FastAPI, Request
+from fastapi.middleware.cors import CORSMiddleware
 
-# Define FastAPI app
 app = FastAPI()
 
-# Define request body model
-class URLInput(BaseModel):
-    url: str
+# Enable CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Update with your frontend URL
+    allow_credentials=True,
+    allow_methods=["GET", "POST", "OPTIONS"],  # Add OPTIONS method
+    allow_headers=["*"],
+)
 
-# Define URL classification endpoint
-@app.post("/classify/")
-async def classify_url(url_input: URLInput):
-    # Placeholder for model prediction logic
-    # Replace this with your actual model prediction code
-    prediction = "legitimate"  # Example prediction
-    return {"prediction": prediction}
+# Placeholder function for URL classification
+def classify_url(url: str) -> str:
+    # Perform classification logic here (placeholder)
+    # This could involve using a pre-trained machine learning model
+    # Replace this with your actual classification logic
+    # For example, you could use a model.predict() function
+    return "phishing"  # Placeholder response
+
+@app.options("/classify/")  # Handle OPTIONS requests
+async def options(request: Request):
+    return {}
+
+@app.post("/classify/")  # Handle POST requests
+async def classify(url: str):
+    classification_result = classify_url(url)
+    return {"result": classification_result}
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="127.0.0.1", port=8000)
