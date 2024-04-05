@@ -1,13 +1,12 @@
 // src/App.js
 import React from "react";
-import URLChecker from "./components/URLChecker";
+import InteractiveInput from "./components/InteractiveInput";
 
 
 function App() {
   return (
     <div className="App">
-      <h1>URL Classifier</h1>
-      <URLChecker/>
+      <InteractiveInput/>
     </div>
   );
 }
