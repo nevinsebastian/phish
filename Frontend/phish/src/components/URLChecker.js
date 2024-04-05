@@ -14,6 +14,10 @@ const URLForm = () => {
       setPrediction(isPhishing ? "Phishing" : "Legitimate");
       setError("");
       if (!isPhishing) {
+        // Check if the URL starts with "http://" or "https://"
+        if (!url.startsWith("http://") && !url.startsWith("https://")) {
+          setURL("http://" + url); // Add "http://" if missing
+        }
         window.location.href = url; // Redirect to the given link if it's not phishing
       }
     } catch (error) {
