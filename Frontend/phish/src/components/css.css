@@ -1,17 +1,37 @@
+/* CSS.css */
+
 /* Font import */
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700&display=swap');
 
 /* Font styling */
+.interactive-input {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .plus-jakarta-sans {
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-style: normal;
+  color: aliceblue;
+  font-size: 31px;
 }
 
-/* Adjust font weight as needed */
 .plus-jakarta-sans-bold {
-  font-weight: 700; /* Bold */
+  font-weight: 700;
 }
 
-.plus-jakarta-sans-regular {
-  font-weight: 400; /* Regular */
+.interactive-input .help-text {
+  position: absolute;
+  top: 60px; /* Adjusted position */
+  right: 20px; /* Adjusted position */
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: rgb(255, 255, 255);
 }
