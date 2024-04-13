@@ -49,6 +49,17 @@
   font-weight: 700;
 }
 
+.dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background-color: yellow;
+  border-radius: 50%;
+  position: relative;
+  top: -0.7em; /* Adjust the position as needed */
+  margin-left: 4px; /* Adjust the margin as needed */
+}
+
 .interactive-input .help-text {
   position: absolute;
   top: 140px; /* Adjusted position */
