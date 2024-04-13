@@ -1,11 +1,12 @@
 // InteractiveInput.js
 
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "./css.css"; // Import your CSS file
 
 const InteractiveInput = () => {
   const [showFAQ, setShowFAQ] = useState(false);
   const [showFAQButton, setShowFAQButton] = useState(true);
+  const faqRef = useRef(null);
 
   const toggleFAQ = () => {
     setShowFAQ(!showFAQ);
@@ -17,6 +18,20 @@ const InteractiveInput = () => {
     setShowFAQButton(true);
   };
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (faqRef.current && !faqRef.current.contains(event.target)) {
+        hideFAQ();
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
     <div className="interactive-input" style={{ width: "100vw", height: "100vh", backgroundImage: `url(/BG.png)`, backgroundSize: "cover", backgroundPosition: "center", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
       <div className="search-bar-container">
@@ -26,7 +41,7 @@ const InteractiveInput = () => {
       <div className="help-text">We are here to help to stay safe</div>
       <div className="faq-text" onClick={toggleFAQ}>#FAQ</div>
       {showFAQ && (
-        <div className="faq-container"onClick={hideFAQ}>
+        <div className="faq-container" ref={faqRef}>
           <div className="faq-question">1: What is phishing?</div>
           <div className="faq-answer"> Phishing is a type of cyber attack where attackers impersonate legitimate entities to obtain sensitive information such as usernames, passwords, and credit card details.</div>
           <div className="faq-question">2: How do I recognize a phishing attempt?</div>
