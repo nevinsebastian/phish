@@ -94,13 +94,10 @@
   color: white;
   z-index: 100;
   max-height: 200px; /* Adjust as needed */
-  overflow-y: auto;
+  overflow-y: auto; /* Enable scrolling */
 }
 
-.faq-question {
-  margin-bottom: 10px;
-}
-
-.faq-answer {
-  margin-bottom: 20px;
+/* Hide scrollbar */
+.faq-container::-webkit-scrollbar {
+  width: 0; /* Hide scrollbar */
 }
