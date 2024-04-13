@@ -16,6 +16,29 @@
   align-items: center;
 }
 
+.search-bar-container {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.search-bar {
+  width: 600px;
+  height: 40px;
+  padding: 10px;
+  border: none;
+  border-radius: 20px;
+  background-color: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  color: white;
+  font-size: 16px;
+  font-family: 'Inter', sans-serif;
+  outline: none;
+}
+
+.search-bar::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
 .plus-jakarta-sans {
   font-family: 'Plus Jakarta Sans', sans-serif;
   color: aliceblue;
@@ -28,8 +51,8 @@
 
 .interactive-input .help-text {
   position: absolute;
-  top: 110px; /* Adjusted position */
-  left: 20px; /* Adjusted position */
+  top: 140px; /* Adjusted position */
+  left: 90px; /* Adjusted position */
   font-family: 'Inter', sans-serif;
   font-size: 16px;
   font-weight: 400;
