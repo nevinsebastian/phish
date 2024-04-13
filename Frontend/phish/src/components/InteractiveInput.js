@@ -5,9 +5,16 @@ import "./css.css"; // Import your CSS file
 
 const InteractiveInput = () => {
   const [showFAQ, setShowFAQ] = useState(false);
+  const [showFAQButton, setShowFAQButton] = useState(true);
 
   const toggleFAQ = () => {
     setShowFAQ(!showFAQ);
+    setShowFAQButton(false);
+  };
+
+  const hideFAQ = () => {
+    setShowFAQ(false);
+    setShowFAQButton(true);
   };
 
   return (
@@ -15,11 +22,11 @@ const InteractiveInput = () => {
       <div className="search-bar-container">
         <input type="text" className="search-bar" placeholder="Enter your Link" />
       </div>
-      <div className="plus-jakarta-sans plus-jakarta-sans-bold" style={{ position: "absolute", top: 90, left: 90 }}>PhisherX<span className="dot"></span></div>
+      <div className={`plus-jakarta-sans plus-jakarta-sans-bold ${showFAQButton ? 'show' : 'hide'}`} style={{ position: "absolute", top: 90, left: 90 }} onClick={toggleFAQ}>PhisherX<span className="dot"></span></div>
       <div className="help-text">We are here to help to stay safe</div>
       <div className="faq-text" onClick={toggleFAQ}>#FAQ</div>
       {showFAQ && (
-        <div className="faq-container">
+        <div className="faq-container"onClick={hideFAQ}>
           <div className="faq-question">1: What is phishing?</div>
           <div className="faq-answer"> Phishing is a type of cyber attack where attackers impersonate legitimate entities to obtain sensitive information such as usernames, passwords, and credit card details.</div>
           <div className="faq-question">2: How do I recognize a phishing attempt?</div>
