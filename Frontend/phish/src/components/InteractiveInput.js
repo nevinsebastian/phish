@@ -1,9 +1,8 @@
-// InteractiveInput.js
-
 import React, { useState, useRef, useEffect } from "react";
 import "./css.css"; // Import your CSS file
 
 const InteractiveInput = () => {
+  const [inputText, setInputText] = useState("");
   const [showFAQ, setShowFAQ] = useState(false);
   const [showFAQButton, setShowFAQButton] = useState(true);
   const faqRef = useRef(null);
@@ -16,6 +15,42 @@ const InteractiveInput = () => {
   const hideFAQ = () => {
     setShowFAQ(false);
     setShowFAQButton(true);
+  };
+
+  const handleInputChange = (event) => {
+    setInputText(event.target.value);
+  };
+
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      submitInputText();
+    }
+  };
+
+  const submitInputText = () => {
+    // Call the API endpoint with the input text
+    fetch("http://127.0.0.1:8000/predict", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ urls: inputText })
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+    .then(data => {
+      // Handle the API response here
+      console.log(data);
+      // Display the prediction to the user
+      alert(`The prediction for ${inputText} is ${data.prediction}`);
+    })
+    .catch(error => {
+      console.error("Error:", error);
+    });
   };
 
   useEffect(() => {
@@ -35,7 +70,7 @@ const InteractiveInput = () => {
   return (
     <div className="interactive-input" style={{ width: "100vw", height: "100vh", backgroundImage: `url(/BG.png)`, backgroundSize: "cover", backgroundPosition: "center", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
       <div className="search-bar-container">
-        <input type="text" className="search-bar" placeholder="Enter your Link" />
+        <input type="text" className="search-bar" placeholder="Enter your Link" value={inputText} onChange={handleInputChange} onKeyPress={handleKeyPress} />
       </div>
       <div className={`plus-jakarta-sans plus-jakarta-sans-bold ${showFAQButton ? 'show' : 'hide'}`} style={{ position: "absolute", top: 90, left: 90 }} onClick={toggleFAQ}>PhisherX<span className="dot"></span></div>
       <div className="help-text">We are here to help to stay safe</div>
