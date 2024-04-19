@@ -3,6 +3,8 @@ import "./css.css"; // Import your CSS file
 
 const InteractiveInput = () => {
   const [inputText, setInputText] = useState("");
+  const [prediction, setPrediction] = useState(null);
+  const [redirectCountdown, setRedirectCountdown] = useState(5);
   const [showFAQ, setShowFAQ] = useState(false);
   const [showFAQButton, setShowFAQButton] = useState(true);
   const faqRef = useRef(null);
@@ -45,12 +47,32 @@ const InteractiveInput = () => {
     .then(data => {
       // Handle the API response here
       console.log(data);
-      // Display the prediction to the user
-      alert(`The prediction for ${inputText} is ${data.prediction}`);
+      // Update state with prediction result
+      setPrediction(data.prediction);
+      // Redirect if the link is safe
+      if (data.prediction === "good") {
+        setTimeout(() => {
+          window.open(addHTTPProtocol(inputText), '_blank');
+          const countdownInterval = setInterval(() => {
+            setRedirectCountdown(countdown => countdown - 1);
+          }, 1000);
+          setTimeout(() => {
+            clearInterval(countdownInterval);
+          }, 5000); // Stop countdown after 5 seconds
+        }, 5000); // Redirect after 5 seconds
+      }
     })
     .catch(error => {
       console.error("Error:", error);
     });
+  };
+
+  // Function to add HTTP protocol if missing
+  const addHTTPProtocol = (url) => {
+    if (!url.match(/^https?:\/\//i)) {
+      return 'http://' + url;
+    }
+    return url;
   };
 
   useEffect(() => {
@@ -71,6 +93,11 @@ const InteractiveInput = () => {
     <div className="interactive-input" style={{ width: "100vw", height: "100vh", backgroundImage: `url(/BG.png)`, backgroundSize: "cover", backgroundPosition: "center", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
       <div className="search-bar-container">
         <input type="text" className="search-bar" placeholder="Enter your Link" value={inputText} onChange={handleInputChange} onKeyPress={handleKeyPress} />
+        {prediction !== null && (
+          <div className={`prediction ${prediction === "good" ? "good" : "bad"}`}>
+            {prediction === "good" ? `This link is safe. Redirecting in ${redirectCountdown} seconds...` : "This link is phishing."}
+          </div>
+        )}
       </div>
       <div className={`plus-jakarta-sans plus-jakarta-sans-bold ${showFAQButton ? 'show' : 'hide'}`} style={{ position: "absolute", top: 90, left: 90 }} onClick={toggleFAQ}>PhisherX<span className="dot"></span></div>
       <div className="help-text">We are here to help to stay safe</div>
