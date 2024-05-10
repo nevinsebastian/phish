@@ -31,7 +31,7 @@ const InteractiveInput = () => {
 
   const submitInputText = () => {
     // Call the API endpoint with the input text
-    fetch("http://127.0.0.1:8000/predict", {
+    fetch("http://16.171.255.192:8000/predict", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

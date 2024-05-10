@@ -11,7 +11,7 @@ const URLForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:8000/classify/", { url });
+      const response = await axios.post("http://16.171.255.192:8000/predict", { url });
       setPrediction(response.data.prediction);
       setError("");
     } catch (error) {
